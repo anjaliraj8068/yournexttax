@@ -1,0 +1,73 @@
+<div class="card shadow-lg border-0 mt-4">
+
+    <div class="card-header text-white" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+
+        <h5 class="mb-0">
+
+            ⚡ Quick Actions
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+
+                <a href="{% url 'add_income' %}" class="btn text-white w-100 shadow-sm"
+                    style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    Add Income
+
+                </a>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <a href="{% url 'add_deduction' %}" class="btn text-white w-100 shadow-sm"
+                    style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+
+                    <i class="bi bi-wallet2"></i>
+
+                    Add Deduction
+
+                </a>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <a href="{% url 'ai_recommendation' %}" class="btn text-white w-100 shadow-sm"
+                    style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+
+                    <i class="bi bi-robot"></i>
+
+                    AI Advice
+
+                </a>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <button onclick="window.print()" class="btn text-white w-100 shadow-sm"
+                    style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+
+                    <i class="bi bi-printer"></i>
+
+                    Print
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

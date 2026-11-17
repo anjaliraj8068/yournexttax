@@ -1,0 +1,42 @@
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mt-4">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex align-items-center">
+        <h5 class="fw-bold text-dark mb-0 d-flex align-items-center">
+            <i class="bi bi-file-earmark-text text-primary me-2"></i> Tax Summary
+        </h5>
+    </div>
+
+    <div class="card-body px-4 pb-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <tbody>
+                    <tr class="border-bottom border-light">
+                        <th class="py-3 fs-8 text-secondary fw-semibold" width="50%">Total declared income</th>
+                        <td class="py-3 text-end fw-bold text-primary fs-8">₹{{ income|default:"0" }}</td>
+                    </tr>
+                    <tr class="border-bottom border-light">
+                        <th class="py-3 fs-8 text-secondary fw-semibold">Total claiming deductions</th>
+                        <td class="py-3 text-end fw-bold text-success fs-8">₹{{ deduction|default:"0" }}</td>
+                    </tr>
+                    <tr class="border-bottom border-light">
+                        <th class="py-3 fs-8 text-secondary fw-semibold">Taxable Net Amount</th>
+                        <td class="py-3 text-end fw-bold text-warning fs-8">₹{{ taxable_income|default:"0" }}</td>
+                    </tr>
+                    <tr>
+                        <th class="py-3 fs-8 text-dark fw-bold">Estimated Liabilities</th>
+                        <td class="py-3 text-end fw-extrabold text-danger fs-8">₹{{ tax|default:"0" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fs-8 {
+        font-size: 0.85rem;
+    }
+
+    .fw-extrabold {
+        font-weight: 800;
+    }
+</style>

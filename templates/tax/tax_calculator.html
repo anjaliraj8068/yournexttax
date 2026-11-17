@@ -1,0 +1,102 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Tax Calculator{% endblock %}
+
+{% block dashboard_content %}
+<div class="row g-4">
+
+    <!-- Title and Action Banner -->
+    <div class="col-12">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+            <div>
+                <h3 class="fw-bold text-dark mb-1" style="font-family: 'Inter', sans-serif;">
+                    🧮 Income Tax Estimator
+                </h3>
+                <p class="text-secondary fs-8 mb-0">Compare old vs new tax regimes based on current declarations.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button
+                    class="btn btn-outline-secondary btn-sm px-3 py-2 rounded-3 fw-semibold d-flex align-items-center"
+                    onclick="window.print()">
+                    <i class="bi bi-printer me-2"></i> Print Report
+                </button>
+                <a href="{% url 'download_tax_report' %}"
+                    class="btn text-white btn-sm px-3 py-2 rounded-3 fw-semibold shadow-sm d-flex align-items-center border-0"
+                    style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+                    <i class="bi bi-file-earmark-pdf me-2"></i> Download PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards Block -->
+    <div class="col-12">
+        {% include "tax/components/statistics_cards.html" %}
+    </div>
+
+    <!-- Row 1: Recommendations (Flattened direct columns) -->
+    <div class="col-md-6">
+        {% include "tax/components/recommendation.html" %}
+    </div>
+    <div class="col-md-6">
+        {% include "tax/components/ai_recommendation.html" %}
+    </div>
+
+    <!-- Row 2: Tax Breakdown and Analysis -->
+    <div class="col-md-6">
+        {% include "tax/components/tax_summary.html" %}
+    </div>
+    <div class="col-md-6">
+        {% include "tax/components/tax_analysis.html" %}
+    </div>
+
+    <!-- Row 3: Regime Comparison and Slab Rates -->
+    <div class="col-md-6">
+        {% include "tax/components/regime_comparison.html" %}
+    </div>
+    <div class="col-md-6">
+        {% include "tax/components/tax_slabs.html" %}
+    </div>
+
+    <!-- Row 4: Visualizing charts (Unified charts section) -->
+    <div class="col-md-6">
+        {% include "tax/components/bar_chart.html" %}
+    </div>
+    <div class="col-md-6">
+        {% include "tax/components/doughnut_chart.html" %}
+    </div>
+
+    <!-- Row 5: Action Board -->
+    <div class="col-12">
+        {% include "tax/components/quick_actions.html" %}
+    </div>
+
+</div>
+
+<style>
+    @media print {
+
+        /* Hide layout containers for paper format */
+        #sidebar-wrapper,
+        .navbar,
+        .btn,
+        .card-header,
+        footer {
+            display: none !important;
+        }
+
+        main.content-body {
+            padding: 0 !important;
+        }
+
+        body {
+            background: #ffffff !important;
+        }
+
+        .card {
+            box-shadow: none !important;
+            border: 1px solid #dee2e6 !important;
+        }
+    }
+</style>
+{% endblock %}

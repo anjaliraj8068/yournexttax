@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if request.user.is_authenticated and not hide_sidebar %}
+<div class="d-flex min-vh-100 w-100" id="dashboard-wrapper">
+    <!-- Sticky Sidebar -->
+    <aside id="sidebar-wrapper" class="border-end shadow-sm">
+        {% include "includes/sidebar.html" %}
+    </aside>
+
+    <!-- Main Content Area -->
+    <div id="page-content-wrapper" class="d-flex flex-column flex-grow-1 min-width-0">
+        <!-- Inside topbar -->
+        {% include "includes/topbar.html" %}
+
+        <!-- Content Body -->
+        <main class="content-body flex-grow-1 p-4">
+            {% else %}
+            <div class="container py-5">
+                {% endif %}
+
+                {% block dashboard_content %}
+                {% endblock %}
+
+                {% if request.user.is_authenticated and not hide_sidebar %}
+        </main>
+
+        <!-- Footer inside content pane -->
+        {% include "includes/footer.html" %}
+    </div>
+</div>
+{% else %}
+</div>
+{% endif %}
+{% endblock %}

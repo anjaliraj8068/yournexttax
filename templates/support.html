@@ -1,0 +1,141 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Support{% endblock %}
+
+{% block dashboard_content %}
+
+<section class="text-white py-5 position-relative overflow-hidden"
+    style="background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);">
+
+    <div class="position-absolute rounded-circle"
+        style="width: 250px; height: 250px; background: rgba(255,255,255,0.05); bottom: -100px; right: -50px;"></div>
+
+    <div class="container text-center position-relative z-1 py-4">
+        <h1 class="display-4 fw-bold tracking-tight">
+            Customer Support
+        </h1>
+        <p class="lead mt-3">
+            We are here to help. Find answers to common questions or reach out to our team.
+        </p>
+    </div>
+</section>
+
+<div class="container my-5">
+    <div class="row g-4">
+
+        <!-- Contact Information -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 h-100 rounded-4">
+                <div class="card-body p-4">
+                    <h3 class="mb-4">Contact Us</h3>
+
+                    <div class="d-flex align-items-center mb-3 text-muted">
+                        <div class="fs-4 me-3">📧</div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Email Support</h6>
+                            <a href="mailto:support@aitaxsystem.com"
+                                class="text-decoration-none">support@aitaxsystem.com</a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-3 text-muted">
+                        <div class="fs-4 me-3">📞</div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Phone</h6>
+                            <span>+1 (800) 123-4567</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-4 text-muted">
+                        <div class="fs-4 me-3">🏢</div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Address</h6>
+                            <span>123 Tax Avenue, Suite 100<br>Tech City, TC 12345</span>
+                        </div>
+                    </div>
+
+                    <p class="text-muted small">Our support hours are Monday–Friday, 9:00 AM to 6:00 PM EST.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="col-md-7">
+            <div class="card shadow-sm border-0 h-100 rounded-4">
+                <div class="card-body p-4">
+                    <h3 class="mb-4">Frequently Asked Questions</h3>
+
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item mb-2 border-0 shadow-sm rounded">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button bg-light fw-bold" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    How is my tax calculated?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    Our system uses the latest tax slabs and standard algorithms to compute your tax
+                                    liability accurately. It subtracts your eligible deductions from your total income
+                                    to find the taxable income, which is then processed through the tax brackets.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item mb-2 border-0 shadow-sm rounded">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed bg-light fw-bold" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    Is my financial data secure?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    Yes! We prioritize your privacy and use industry-standard encryption to protect your
+                                    data. Your financial details are safely stored and only accessible by you.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 shadow-sm rounded">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed bg-light fw-bold" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    How does the AI Assistant work?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    The AI Assistant uses Gemini 1.5 to analyze your income-expense profile. It provides
+                                    personalized, actionable recommendations for optimizing deductions and lowering your
+                                    taxes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .tracking-tight {
+        letter-spacing: -0.025em;
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #4f46e5;
+        background-color: #eef2ff !important;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+    }
+</style>
+
+{% endblock %}

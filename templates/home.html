@@ -1,0 +1,86 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block dashboard_content %}
+
+<section class="text-white py-5 position-relative overflow-hidden"
+    style="background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);">
+
+    <!-- Abstract Design Elements -->
+    <div class="position-absolute rounded-circle"
+        style="width: 300px; height: 300px; background: rgba(255,255,255,0.05); top: -100px; right: -50px;"></div>
+    <div class="position-absolute rounded-circle"
+        style="width: 200px; height: 200px; background: rgba(255,255,255,0.05); bottom: -50px; left: -100px;"></div>
+
+    <div class="container text-center position-relative z-1 py-4">
+
+        <h1 class="display-3 fw-bold tracking-tight">
+            AI-Enhanced Revenue & Income Tax Management System
+        </h1>
+
+        <p class="lead mt-3">
+            Smart Tax Calculation • Income Management • AI Tax Assistant • PDF Reports
+        </p>
+
+        <a href="{% url 'register' %}" class="btn btn-light btn-lg mt-4 px-5 fw-bold shadow-sm" style="color: #6366f1;">
+            Get Started <i class="bi bi-arrow-right ms-2"></i>
+        </a>
+
+    </div>
+</section>
+
+<div class="container my-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 text-center rounded-4 transition-all hover-lift">
+                <div class="card-body">
+                    <h3>💰</h3>
+                    <h5>Income Management</h5>
+                    <p>Manage salary, business, capital gains and other income.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 text-center rounded-4 transition-all hover-lift">
+                <div class="card-body">
+                    <h3>📊</h3>
+                    <h5>Tax Calculator</h5>
+                    <p>Automatic tax calculation using the latest rules.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 text-center rounded-4 transition-all hover-lift">
+                <div class="card-body">
+                    <h3>🤖</h3>
+                    <h5>AI Assistant</h5>
+                    <p>Get AI-powered tax saving suggestions using Gemini.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .tracking-tight {
+        letter-spacing: -0.025em;
+    }
+</style>
+
+{% endblock %}

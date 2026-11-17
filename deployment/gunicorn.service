@@ -1,0 +1,12 @@
+[Unit]
+Description=gunicorn daemon for yournexttax
+After=network.target
+
+[Service]
+User=sammy
+Group=www-data
+WorkingDirectory=/path/to/yournexttax
+ExecStart=/path/to/yournexttax/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/path/to/yournexttax/gunicorn.sock config.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

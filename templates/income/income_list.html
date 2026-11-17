@@ -1,0 +1,180 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Income List{% endblock %}
+
+{% block dashboard_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-11 mb-5">
+        <div class="d-flex justify-content-between align-items-end mb-4 mt-2">
+            <div>
+                <h3 class="fw-bold mb-1 d-flex align-items-center tracking-tight" style="color: #1e293b;">
+                    <i class="bi bi-wallet2 me-2 fs-3 text-primary"></i> Income Records
+                </h3>
+                <p class="text-secondary mb-0 fs-7">Manage and review all logged income sources</p>
+            </div>
+
+            <a href="{% url 'add_income' %}"
+                class="btn text-white px-4 py-2 rounded-3 fw-semibold shadow-sm d-flex align-items-center transition-all action-btn"
+                style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+                <i class="bi bi-plus-lg me-2"></i> Add Income
+            </a>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 custom-table">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">No.</th>
+                            <th>Income Category</th>
+                            <th>Amount</th>
+                            <th>Financial Year</th>
+                            <th>Description</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for income in incomes %}
+                        <tr>
+                            <td class="ps-4 text-muted fw-medium">#{{ forloop.counter }}</td>
+                            <td>
+                                {% if income.income_type == "Salary" %}
+                                <span
+                                    class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2 fw-semibold">
+                                    <i class="bi bi-briefcase me-1"></i> Salary
+                                </span>
+                                {% elif income.income_type == "Business" %}
+                                <span
+                                    class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2 fw-semibold">
+                                    <i class="bi bi-building me-1"></i> Business
+                                </span>
+                                {% elif income.income_type == "Capital Gain" %}
+                                <span
+                                    class="badge rounded-pill bg-warning bg-opacity-25 text-dark px-3 py-2 fw-semibold">
+                                    <i class="bi bi-graph-up-arrow me-1"></i> Capital Gain
+                                </span>
+                                {% elif income.income_type == "House Property" %}
+                                <span class="badge rounded-pill bg-info bg-opacity-10 text-info px-3 py-2 fw-semibold">
+                                    <i class="bi bi-house me-1"></i> House Property
+                                </span>
+                                {% else %}
+                                <span
+                                    class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary px-3 py-2 fw-semibold">
+                                    <i class="bi bi-box me-1"></i> Other
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span
+                                    class="badge bg-success rounded-pill px-3 py-2 shadow-sm fs-6 fw-bold border border-success border-opacity-50">₹
+                                    {{ income.amount }}</span>
+                            </td>
+                            <td>
+                                <span class="text-secondary fw-medium fs-7">{{ income.financial_year }}</span>
+                            </td>
+                            <td>
+                                <span class="text-dark fs-7">{{ income.description|default:"-" }}</span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="d-inline-flex gap-2">
+                                    <a href="{% url 'edit_income' income.id %}"
+                                        class="btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center text-primary action-icon"
+                                        style="width: 32px; height: 32px;" title="Edit">
+                                        <i class="bi bi-pencil-fill fs-8"></i>
+                                    </a>
+                                    <a href="{% url 'delete_income' income.id %}"
+                                        class="btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center text-danger action-icon"
+                                        style="width: 32px; height: 32px;" title="Delete"
+                                        onclick="return confirm('Silently remove this income record?');">
+                                        <i class="bi bi-trash3-fill fs-8"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="empty-state text-muted">
+                                    <i class="bi bi-folder2-open d-block mb-3"
+                                        style="font-size: 3rem; color: #cbd5e1;"></i>
+                                    <h6 class="fw-bold text-dark mb-1">No Income Records found</h6>
+                                    <p class="fs-7 mb-4">You have not added any income streams yet.</p>
+                                    <a href="{% url 'add_income' %}"
+                                        class="btn btn-outline-primary btn-sm rounded-pill px-4">Log First Income</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .custom-table thead th {
+        background-color: #f8fafc;
+        color: #64748b;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+        border-bottom: 2px solid #e2e8f0;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .custom-table tbody td {
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+    }
+
+    .custom-table tbody tr:hover td {
+        background-color: #f8fafc !important;
+    }
+
+    .action-icon {
+        background-color: #f1f5f9;
+        border: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .action-icon:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .action-icon.text-primary:hover {
+        background-color: #eff6ff;
+    }
+
+    .action-icon.text-danger:hover {
+        background-color: #fef2f2;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(168, 85, 247, 0.4) !important;
+    }
+
+    .fs-7 {
+        font-size: 0.85rem;
+    }
+
+    .fs-8 {
+        font-size: 0.75rem;
+    }
+
+    .tracking-tight {
+        letter-spacing: -0.025em;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center py-5" style="min-height: 80vh; background-color: #f8fafc;">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="max-width: 450px; width: 100%;">
+        <div class="card-header border-0 text-white text-center py-4"
+            style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);">
+            <h3 class="fw-bold mb-0"><i class="bi bi-shield-lock me-2"></i> Welcome Back</h3>
+            <p class="mb-0 fs-8 text-white-50 mt-1">Sign in to your AI Tax Dashboard</p>
+        </div>
+        <div class="card-body p-4 p-md-5">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-4">
+                    <label class="form-label text-secondary fw-semibold fs-8 mb-1">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted"><i
+                                class="bi bi-person"></i></span>
+                        <input type="text" name="username" class="form-control bg-light border-start-0 py-2 fs-7"
+                            placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-secondary fw-semibold fs-8 mb-1">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted"><i
+                                class="bi bi-lock"></i></span>
+                        <input type="password" name="password" class="form-control bg-light border-start-0 py-2 fs-7"
+                            placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="btn btn-primary w-100 py-2.5 rounded-3 fw-bold shadow-sm d-flex justify-content-center align-items-center transition-all bg-gradient-premium mt-2 text-white border-0">
+                    Login <i class="bi bi-arrow-right-short fs-5 ms-1"></i>
+                </button>
+            </form>
+
+            <div class="text-center mt-4 pt-2 border-top">
+                <span class="text-secondary fs-8">Don't have an account?</span>
+                <a href="{% url 'register' %}" class="text-decoration-none fw-bold ms-1 fs-8"
+                    style="color: #8b5cf6 !important;">Register
+                    here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8fafc;
+    }
+
+    .bg-gradient-premium {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+        border: none;
+    }
+
+    .bg-gradient-premium:hover {
+        background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.4) !important;
+    }
+
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #8b5cf6;
+    }
+
+    .input-group:focus-within .input-group-text,
+    .input-group:focus-within .form-control {
+        border-color: #8b5cf6;
+        background-color: #ffffff !important;
+    }
+
+    .fs-7 {
+        font-size: 0.95rem;
+    }
+
+    .fs-8 {
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}

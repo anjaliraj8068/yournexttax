@@ -1,0 +1,107 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block dashboard_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="card-header text-white border-0 py-3.5 px-4 d-flex justify-content-between align-items-center"
+                style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+                <h5 class="mb-0 text-white fw-bold d-flex align-items-center">
+                    <i class="bi bi-bell-fill me-2"></i> Notifications Center
+                </h5>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-white-soft text-white fs-8 px-2.5 py-1.5 rounded-3">
+                        {{ notifications.count }} Messages
+                    </span>
+                    <a href="{% url 'mark_all_read' %}"
+                        class="btn btn-light btn-sm fw-semibold fs-8 px-3 py-1.5 rounded-3 shadow-sm border-0 text-primary">
+                        <i class="bi bi-check2-all me-1"></i> Mark All Read
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body p-4 bg-white">
+                <div class="d-flex flex-column gap-3">
+                    {% for note in notifications %}
+                    <div class="p-3.5 rounded-4 border-start border-4 shadow-sm {% if note.is_read %}bg-light opacity-75 border-secondary-subtle{% else %}bg-white border-primary{% endif %}"
+                        style="border-top: 1px solid #f1f5f9; border-right: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9;">
+
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex align-items-center">
+                                <span
+                                    class="d-inline-flex p-2 rounded-3 me-2.5 {% if note.notification_type == 'success' %}bg-success-soft text-success{% elif note.notification_type == 'danger' %}bg-danger-soft text-danger{% elif note.notification_type == 'warning' %}bg-warning-soft text-warning{% else %}bg-primary-soft text-primary{% endif %}">
+                                    {% if note.notification_type == "success" %}
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    {% elif note.notification_type == "danger" %}
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    {% elif note.notification_type == "warning" %}
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    {% else %}
+                                    <i class="bi bi-info-circle-fill"></i>
+                                    {% endif %}
+                                </span>
+                                <h6 class="fw-bold mb-0 text-dark fs-8">{{ note.title }}</h6>
+                            </div>
+                            {% if not note.is_read %}
+                            <span class="badge bg-danger rounded-pill px-2.5 py-1 fs-9">New</span>
+                            {% endif %}
+                        </div>
+
+                        <p class="text-secondary fs-8 mt-2 mb-2 px-1">
+                            {{ note.message }}
+                        </p>
+
+                        <div class="d-flex align-items-center px-1 text-muted fs-9">
+                            <i class="bi bi-clock me-1"></i>
+                            <span>{{ note.created_at|timesince }} ago</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="bi bi-bell-slash fs-1 d-block mb-3 opacity-40"></i>
+                        <h6 class="fw-bold text-dark mb-1">No Notifications Available</h6>
+                        <span class="fs-8 text-secondary">You are all caught up with your tax reminders list.</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-primary-soft {
+        background-color: #eff6ff;
+    }
+
+    .bg-success-soft {
+        background-color: #ecfdf5;
+    }
+
+    .bg-danger-soft {
+        background-color: #fef2f2;
+    }
+
+    .bg-warning-soft {
+        background-color: #fffbeb;
+    }
+
+    .bg-white-soft {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .fs-8 {
+        font-size: 0.85rem;
+    }
+
+    .fs-9 {
+        font-size: 0.75rem;
+    }
+
+    .p-3\.5 {
+        padding: 0.875rem !important;
+    }
+</style>
+{% endblock %}

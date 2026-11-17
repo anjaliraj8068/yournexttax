@@ -1,0 +1,33 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Generating Recommendation...{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
+    <!-- Circular Progress Indicator -->
+    <div class="position-relative mb-4">
+        <!-- Optional outer dashed spinning ring for extra style -->
+        <div class="spinner-border text-primary" style="width: 5rem; height: 5rem; border-width: 0.35em;" role="status">
+        </div>
+        <!-- Center Icon -->
+        <div class="position-absolute align-items-center justify-content-center d-flex"
+            style="top: 0; left: 0; right: 0; bottom: 0;">
+            <i class="bi bi-robot text-primary fs-3"></i>
+        </div>
+    </div>
+
+    <h3 class="fw-bold mb-2">Analyzing your tax profile...</h3>
+    <p class="text-muted text-center max-w-md">
+        Please wait while Google Gemini calculates your optimal deductions and generates a personalized tax
+        recommendation. This shouldn't take more than a few seconds.
+    </p>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Automatically redirect to the processing endpoint which will do the heavy lifting
+        // Since we are replacing the location, the user won't get stuck navigating 'back' to the loading screen
+        window.location.replace("{% url 'process_ai_recommendation' %}");
+    });
+</script>
+{% endblock %}

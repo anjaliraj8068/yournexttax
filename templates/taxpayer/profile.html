@@ -1,0 +1,114 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Taxpayer Profile{% endblock %}
+
+{% block dashboard_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="card-header text-white border-0 py-3.5 px-4 d-flex align-items-center"
+                style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+                <h5 class="mb-0 text-white fw-bold d-flex align-items-center">
+                    <i class="bi bi-person-circle me-2"></i> Taxpayer Profile
+                </h5>
+            </div>
+            <div class="card-body p-4 bg-white">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                        <div class="me-4">
+                            {% if request.user.profile_image %}
+                            <img src="{{ request.user.profile_image.url }}" alt="Profile Image"
+                                class="rounded-circle shadow-sm border"
+                                style="width: 80px; height: 80px; object-fit: cover; border-color: #6366f1 !important;">
+                            {% else %}
+                            <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                style="width: 80px; height: 80px; background: linear-gradient(135deg, #6366f1, #a855f7);">
+                                <i class="bi bi-person-fill text-white fs-1"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <label class="form-label fw-semibold text-secondary fs-8 mb-1.5">Profile Picture</label>
+                            <input type="file" name="profile_image" class="form-control" accept="image/*">
+                            <div class="form-text fs-9 mt-1">Upload a new picture to update your avatar.</div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        {% for field in form %}
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-secondary fs-8 mb-1.5">
+                                {{ field.label }}
+                            </label>
+                            <!-- Django Form Field Styling Wrapper -->
+                            <div class="input-group">
+                                {{ field }}
+                            </div>
+                            {% if field.errors %}
+                            <div class="text-danger fs-9 mt-1.5">
+                                {% for error in field.errors %}
+                                <div class="d-flex align-items-center"><i class="bi bi-exclamation-circle me-1"></i> {{
+                                    error }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="text-end mt-4 border-top pt-4" style="margin-top: 1.75rem;">
+                        <button
+                            class="btn text-white px-4 py-2 rounded-3 fs-8 fw-semibold shadow-sm d-flex align-items-center ms-auto"
+                            style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+                            <i class="bi bi-save me-2"></i> Save Profile Setup
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling form inputs inside the template dynamically */
+    .card-body input,
+    .card-body select,
+    .card-body textarea {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.9rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0.375rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+    .card-body input:focus,
+    .card-body select:focus,
+    .card-body textarea:focus {
+        color: #212529;
+        background-color: #fff;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+
+    .fs-8 {
+        font-size: 0.85rem;
+    }
+
+    .fs-9 {
+        font-size: 0.75rem;
+    }
+</style>
+{% endblock %}

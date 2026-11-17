@@ -1,0 +1,123 @@
+<div class="row g-3">
+    <!-- Total Income Card -->
+    <div class="col-6 col-md-3">
+        <div class="card h-100 border-0 shadow-sm rounded-4 stat-card overflow-hidden">
+            <div class="card-body p-3.5 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary fw-semibold fs-8">Total Income</span>
+                    <div class="icon-shape bg-primary-soft text-primary rounded-3 p-2">
+                        <i class="bi bi-cash-stack fs-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="fw-bold text-dark mb-1">₹{{ income|default:"0" }}</h4>
+                    <span class="fs-9 text-success fw-medium"><i class="bi bi-arrow-up-short"></i> Claims
+                        included</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deductions Card -->
+    <div class="col-6 col-md-3">
+        <div class="card h-100 border-0 shadow-sm rounded-4 stat-card overflow-hidden">
+            <div class="card-body p-3.5 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary fw-semibold fs-8">Deductions</span>
+                    <div class="icon-shape bg-success-soft text-success rounded-3 p-2">
+                        <i class="bi bi-shield-check fs-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="fw-bold text-dark mb-1">₹{{ deduction|default:"0" }}</h4>
+                    <span class="fs-9 text-secondary fw-medium">Sec. 80C & others</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taxable Income -->
+    <div class="col-6 col-md-3">
+        <div class="card h-100 border-0 shadow-sm rounded-4 stat-card overflow-hidden">
+            <div class="card-body p-3.5 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary fw-semibold fs-8">Taxable Net</span>
+                    <div class="icon-shape bg-warning-soft text-warning rounded-3 p-2">
+                        <i class="bi bi-graph-down fs-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="fw-bold text-dark mb-1">₹{{ taxable_income|default:"0" }}</h4>
+                    <span class="fs-9 text-secondary fw-medium">Subject to Slab</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estimated Tax -->
+    <div class="col-6 col-md-3">
+        <div class="card h-100 border-0 shadow-sm rounded-4 stat-card bg-primary-grad text-white overflow-hidden">
+            <div class="card-body p-3.5 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-white-50 fw-semibold fs-8">Estimated Tax</span>
+                    <div class="icon-shape bg-white-soft text-white rounded-3 p-2">
+                        <i class="bi bi-wallet-fill fs-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="fw-bold text-white mb-1">₹{{ tax|default:"0" }}</h4>
+                    <span class="fs-9 text-white-50 fw-medium">Under Slab Rates</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-primary-soft {
+        background-color: #eff6ff;
+    }
+
+    .bg-success-soft {
+        background-color: #ecfdf5;
+    }
+
+    .bg-warning-soft {
+        background-color: #fffbeb;
+    }
+
+    .bg-primary-grad {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    }
+
+    .bg-white-soft {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .fs-8 {
+        font-size: 0.85rem;
+    }
+
+    .fs-9 {
+        font-size: 0.75rem;
+    }
+
+    .p-3\.5 {
+        padding: 0.875rem !important;
+    }
+
+    .stat-card {
+        transition: all 0.25s ease-in-out;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .icon-shape {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

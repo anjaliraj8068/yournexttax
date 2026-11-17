@@ -1,0 +1,247 @@
+{% extends 'layouts/dashboard_layout.html' %}
+
+{% block title %}AI Report History{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">
+                🤖 AI Report History
+            </h2>
+
+            <p class="text-muted mb-0">
+                View all generated AI tax reports.
+            </p>
+
+        </div>
+
+        <a href="{% url 'ai_recommendation' %}" class="btn text-white shadow-sm"
+            style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+            <i class="bi bi-arrow-left"></i>
+            Back to Recommendation
+        </a>
+
+    </div>
+
+    <div class="card border-0 shadow">
+
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+
+            <h5 class="mb-0">
+                Generated Reports
+            </h5>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Date</th>
+
+                            <th>Total Income</th>
+
+                            <th>Total Deduction</th>
+
+                            <th>Estimated Tax</th>
+
+                            <th>Status</th>
+
+                            <th width="260">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for report in reports %}
+
+                        <tr>
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+                            <td>
+                                {{ report.created_at|date:"d M Y h:i A" }}
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-success fs-6">
+
+                                    ₹ {{ report.total_income }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-primary fs-6">
+
+                                    ₹ {{ report.total_deduction }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-danger fs-6">
+
+                                    ₹ {{ report.tax_amount }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-success">
+
+                                    Generated
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'download_report' report.id %}" class="btn text-white btn-sm shadow-sm"
+                                    style="background: linear-gradient(135deg, #6366f1, #a855f7); border: none;">
+
+                                    <i class="bi bi-download"></i>
+
+                                    PDF
+
+                                </a>
+
+                                <button class="btn btn-info btn-sm text-white" data-bs-toggle="modal"
+                                    data-bs-target="#report{{ report.id }}">
+
+                                    <i class="bi bi-eye"></i>
+
+                                    View
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- AI Response Modal -->
+                        <div class="modal fade" id="report{{ report.id }}" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-white">
+                                        <h5 class="modal-title">🤖 AI Recommendation</h5>
+                                        <button type="button" class="btn-close btn-close-white"
+                                            data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body p-4">
+                                        <!-- Hidden Raw Markdown Data -->
+                                        <div id="raw-markdown-{{ report.id }}" style="display: none;">
+                                            {{ report.ai_response }}
+                                        </div>
+
+                                        <!-- Parsed Output Target -->
+                                        <div id="parsed-markdown-{{ report.id }}"
+                                            class="markdown-body bg-light p-3 rounded border text-dark fs-6"
+                                            style="line-height: 1.6;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-5">
+                                <h5 class="text-muted">No AI Reports Generated Yet</h5>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Safe robust decoding for markdown rendering in history modals
+        marked.setOptions({ breaks: true, gfm: true });
+
+        var rawElements = document.querySelectorAll('[id^="raw-markdown-"]');
+        rawElements.forEach(function (rawEl) {
+            var idSuffix = rawEl.id.replace("raw-markdown-", "");
+            var parsedEl = document.getElementById("parsed-markdown-" + idSuffix);
+            if (parsedEl) {
+                parsedEl.innerHTML = marked.parse(rawEl.innerHTML);
+            }
+        });
+    });
+</script>
+
+<style>
+    /* Clean overrides for the parsed markdown content specifically in the modal */
+    .markdown-body ul,
+    .markdown-body ol {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3 {
+        font-weight: 700;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        color: #1e293b;
+    }
+
+    .markdown-body h3 {
+        font-size: 1.25rem;
+    }
+
+    .markdown-body h2 {
+        font-size: 1.5rem;
+    }
+
+    .markdown-body pre {
+        background-color: #f1f5f9;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+    }
+
+    .markdown-body code {
+        background-color: #f1f5f9;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.85em;
+        color: #db2777;
+    }
+
+    .markdown-body p:last-child {
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}

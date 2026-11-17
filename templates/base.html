@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {% block title %}
+        AI Income Tax Management System
+        {% endblock %}
+    </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body>
+
+    {% if request.user.is_authenticated and not hide_sidebar %}
+    <!-- Layout container for authenticated dashboard -->
+    {% else %}
+    {% include 'includes/navbar.html' %}
+    {% endif %}
+
+    <!-- ✅ Messages Start -->
+    <div class="container mt-3">
+
+        {% if messages %}
+
+        {% for message in messages %}
+
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+
+            {{ message }}
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+
+    </div>
+    <!-- ✅ Messages End -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% if not request.user.is_authenticated or hide_sidebar %}
+    {% include 'includes/footer.html' %}
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        let lastNotificationId = localStorage.getItem("app_lastNotificationId") ? parseInt(localStorage.getItem("app_lastNotificationId")) : 0;
+        function loadNotifications() {
+
+            fetch("/notifications/api/")
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    // Badge
+
+                    const badge = document.getElementById("notification-count");
+
+                    if (data.unread_count > 0) {
+
+                        badge.innerHTML = data.unread_count;
+
+                        badge.style.display = "inline-block";
+
+                    }
+
+                    else {
+
+                        badge.style.display = "none";
+
+                    }
+
+                    // Dropdown
+
+                    const list = document.getElementById("notification-list");
+
+                    list.innerHTML = "";
+
+                    if (data.notifications.length === 0) {
+
+                        list.innerHTML = `
+
+                <li>
+
+                    <span class="dropdown-item">
+
+                        No Notifications
+
+                    </span>
+
+                </li>
+
+                `;
+
+                    }
+
+                    else {
+
+                        data.notifications.forEach(function (note) {
+
+                            if (note.id > lastNotificationId) {
+
+                                showToast(note.title, note.message);
+
+                                lastNotificationId = note.id;
+                                localStorage.setItem("app_lastNotificationId", lastNotificationId);
+
+                            }
+
+                            list.innerHTML += `
+
+                    <li>
+
+                        <a class="dropdown-item"
+
+                        href="/notifications/">
+
+                            <strong>${note.title}</strong>
+
+                            <br>
+
+                            <small>${note.message}</small>
+
+                        </a>
+
+                    </li>
+
+                    `;
+
+                        });
+
+                    }
+
+                });
+
+        }
+
+
+        if ("Notification" in window) {
+
+            if (Notification.permission !== "granted") {
+
+                Notification.requestPermission();
+
+            }
+
+        }
+        // First Load
+
+        loadNotifications();
+
+        // Auto Refresh Every 10 Seconds
+
+        setInterval(loadNotifications, 10000);
+
+        function showToast(title, message) {
+
+            const sound = document.getElementById("notificationSound");
+
+            if (sound) {
+                sound.play().catch(err => console.log(err));
+            }
+            const bell = document.getElementById("bell-icon");
+
+            bell.classList.add("bell-shake");
+
+            setTimeout(() => {
+
+                bell.classList.remove("bell-shake");
+
+            }, 1000);
+
+            const container = document.getElementById("toastContainer");
+
+            const toast = document.createElement("div");
+
+            toast.className = "toast show shadow border-0 mb-2";
+
+            toast.innerHTML = `
+
+            <div class="toast-header bg-primary text-white">
+
+                <i class="bi bi-bell-fill me-2"></i>
+
+                <strong class="me-auto">${title}</strong>
+
+                <button class="btn-close btn-close-white"
+                data-bs-dismiss="toast"></button>
+
+            </div>
+
+            <div class="toast-body">
+
+                ${message}
+
+            </div>
+
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            }, 5000);
+
+            if (Notification.permission === "granted") {
+
+                const n = new Notification(title, {
+
+                    body: message,
+
+                    icon: "/static/images/logo.png"
+
+                });
+
+                n.onclick = function () {
+
+                    window.open("/notifications/", "_blank");
+
+                };
+
+            }
+        }
+
+    </script>
+    <!-- Live Notification Toast -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index:9999;">
+    </div>
+
+
+    <audio id="notificationSound">
+        <source src="{% static 'sounds/notification.mp3' %}" type="audio/mpeg">
+    </audio>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<div class="card shadow-lg border-0 mt-4">
+
+    <div class="card-header text-white" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+
+        📊 Tax Comparison Chart
+
+    </div>
+
+    <div class="card-body">
+
+        <canvas id="taxChart"></canvas>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    new Chart(document.getElementById("taxChart"), {
+
+        type: "bar",
+
+        data: {
+
+            labels: ["Old Regime", "New Regime"],
+
+            datasets: [{
+
+                label: "Tax Amount",
+
+                data: [
+
+                    Number("{{ old_tax }}"),
+
+                    Number("{{ new_tax }}")
+
+                ],
+
+                backgroundColor: [
+
+                    "#dc3545",
+
+                    "#0d6efd"
+
+                ],
+
+                borderRadius: 8
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+
+                legend: { display: false }
+
+            }
+
+        }
+
+    });
+
+</script>

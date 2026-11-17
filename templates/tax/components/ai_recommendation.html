@@ -1,0 +1,69 @@
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mt-4">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex align-items-center">
+        <h5 class="fw-bold text-dark mb-0 d-flex align-items-center">
+            <i class="bi bi-cpu text-primary me-2"></i> AI Recommendation
+        </h5>
+    </div>
+
+    <div class="card-body px-4 pb-4">
+        {% if better_regime == "Old Regime" %}
+        <div class="p-3.5 rounded-4 bg-success-soft border border-success border-opacity-25" style="color: #065f46;">
+            <h6 class="fw-bold mb-2"><i class="bi bi-shield-fill-check me-1"></i> Optimizing with Old Tax Regime</h6>
+            <p class="fs-8 mb-3 opacity-90">
+                Since you are claiming deductions, the <strong>Old Regime</strong> gives better tax benefits.
+            </p>
+            <ul class="fs-8 mb-0 ps-3.5 opacity-90 d-flex flex-column gap-1.5">
+                <li>Increase investment under <strong>Section 80C</strong> (up to ₹1.5 Lakhs).</li>
+                <li>Claim deduction under <strong>Section 80D</strong> for health insurance.</li>
+                <li>Invest in <strong>NPS (Section 80CCD)</strong> for additional ₹50,000 exemption.</li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="p-3.5 rounded-4 bg-primary-soft border border-primary border-opacity-25" style="color: #1e3a8a;">
+            <h6 class="fw-bold mb-2"><i class="bi bi-cpu-fill me-1"></i> Optimizing with New Tax Regime</h6>
+            <p class="fs-8 mb-3 opacity-90">
+                Your deductions are comparatively lower, so the <strong>New Tax Regime</strong> reduces your tax burden.
+            </p>
+            <ul class="fs-8 mb-0 ps-3.5 opacity-90 d-flex flex-column gap-1.5">
+                <li>No need to maintain complex investment proofs.</li>
+                <li>Simple and faster tax filing process.</li>
+                <li>Highly suitable for salaried employees with low deductions.</li>
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="text-end mt-4">
+            <a href="{% url 'chatbot' %}"
+                class="btn btn-primary btn-sm px-3.5 py-2 rounded-3 fw-semibold shadow-sm d-flex align-items-center justify-content-center w-100 w-sm-auto ms-auto"
+                style="min-width: 140px;">
+                <i class="bi bi-chat-text me-2"></i> Ask AI Assistant
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-success-soft {
+        background-color: #ecfdf5;
+    }
+
+    .bg-primary-soft {
+        background-color: #eff6ff;
+    }
+
+    .fs-8 {
+        font-size: 0.85rem;
+    }
+
+    .p-3\.5 {
+        padding: 0.875rem !important;
+    }
+
+    .ps-3\.5 {
+        padding-left: 1.15rem !important;
+    }
+
+    .gap-1\.5 {
+        row-gap: 0.4rem;
+    }
+</style>
